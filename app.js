@@ -8,10 +8,16 @@ const firstMentionInput = document.getElementById('first-mention-input');
 const descriptionInput = document.getElementById('description-input');
 const locationInput = document.getElementById('location-input');
 const notesInput = document.getElementById('notes-input');
-
+// delete and edit buttons, do not yet function
+const deleteBtn = document.getElementsByClassName('delete-btn');
+const editBtn = document.getElementsByClassName('edit-btn');
+// remove first/last buttons, temporary solution until delete function added
+const removeFirstBtn = document.getElementById('remove-first-btn');
+const removeLastBtn = document.getElementById('remove-last-btn');
+// array will hold all current character objects
 let charactersArr = [];
 
-// event listeners
+
 saveBtn.addEventListener('click', renderCharacter);
 
 // display character array in browser
@@ -23,8 +29,7 @@ function renderCharacter(e) {
 
 // add newest character object to array, create html for each character in array
 function addNewCharacter() {
-  const newCharacter = retrieveInput();
-  charactersArr.push(newCharacter);
+  let charactersArr = retrieveInput();
   // create HTML for each character in charactersArr;
   let renderHtml = "";
   for (let character of charactersArr) {
@@ -32,10 +37,14 @@ function addNewCharacter() {
     <div class="character-card">
        <h2>${character.name}</h2>
        <h3>${character.book}</h3>
-       <p>First mentioned (page): ${character.firstMention}</p>
-       <p>Description: ${character.description}</p>
-       <p>Location: ${character.location}</p>
-       <p>Notes: ${character.notes}</p>
+       <p><span>First mentioned (page):</span> ${character.firstMention}</p>
+       <p><span>Description:</span> ${character.description}</p>
+       <p><span>Location:</span> ${character.location}</p>
+       <p><span>Notes:</span> ${character.notes}</p>
+       <p class="icons">
+        <i class="fa fas fa-pencil edit-btn"></i>
+        <i class="fa fa-solid fa-trash delete-btn"></i>
+      </p> 
      </div>
     `;
   }
@@ -60,6 +69,10 @@ function retrieveInput() {
     location: location,
     notes: notes,
   };
+
+  // add new character object to array
+  charactersArr.push(characterObj);
+
   // clear input fields
   characterNameInput.value = "";
   bookNameInput.value = "";
@@ -68,5 +81,45 @@ function retrieveInput() {
   locationInput.value = "";
   notesInput.value = "";
   
-  return characterObj;
+  return charactersArr;
+}
+
+// remove first item from character array
+removeFirstBtn.addEventListener('click', removeFirst);
+
+function removeFirst(e) {
+  e.preventDefault();
+  charactersArr.shift();
+  characterSection.innerHTML = updateRender();
+}
+
+// remove last item from character array
+removeLastBtn.addEventListener('click', removeLast);
+
+function removeLast(e) {
+  e.preventDefault();
+  charactersArr.pop();
+  characterSection.innerHTML = updateRender();
+}
+
+// update html rendered when array is changed
+function updateRender() {
+  let renderHtml = "";
+  for (let character of charactersArr) {
+    renderHtml += `
+    <div class="character-card">
+       <h2>${character.name}</h2>
+       <h3>${character.book}</h3>
+       <p><span>First mentioned (page):</span> ${character.firstMention}</p>
+       <p><span>Description:</span> ${character.description}</p>
+       <p><span>Location:</span> ${character.location}</p>
+       <p><span>Notes:</span> ${character.notes}</p>
+       <p class="icons">
+        <i class="fa fas fa-pencil edit-btn"></i>
+        <i class="fa fa-solid fa-trash delete-btn"></i>
+      </p> 
+     </div>
+    `;
+  }
+  return renderHtml;
 }
