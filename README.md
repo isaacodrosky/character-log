@@ -7,8 +7,8 @@ Character Log can be found at https://character-log.netlify.app
 
 ## Authors
 
-\\ Isaac Odrosky
-\\ https://github.com/isaacodrosky
+Isaac Odrosky  
+https://github.com/isaacodrosky
 
 ## License
 
