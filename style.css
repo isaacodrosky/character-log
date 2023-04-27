@@ -1,0 +1,84 @@
+
+:root {
+  --sans-serif: 'Fira Sans', sans-serif;
+  --orange: #ff8336;
+  --med-grey: #323232;
+  --dark-grey: #292929;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--sans-serif);
+  color: #FFF;
+  background-color: var(--med-grey);
+}
+
+main {
+  max-width: 70%;
+  margin: 50px auto 20px auto;
+  padding: 40px;
+  text-align: center;
+  background-color: var(--dark-grey);
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+form {
+  margin: 20px auto;
+  max-width: 80%;
+}
+
+form label {
+  display: none;
+}
+
+form input {
+  width: 100%;
+  margin-bottom: 15px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid var(--orange);
+  padding: 10px 5px 0 5px;
+  color: #FFF;
+  font-family: var(--sans-serif);
+  font-size: 1.2rem;
+}
+
+form input:focus {
+  outline: none;
+  border-bottom: 3px solid #FFF;
+}
+
+form button {
+  background-color: var(--orange);
+  color: var(--dark-grey);
+  border: none;
+  margin-top: 20px;
+  padding: 10px 20px;
+  width: 100%;
+  font-size: 1.1rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  border-radius: 50vh;
+}
+
+section {
+  max-width: 90%;
+  margin: 0 auto 10px auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+section div {
+  padding: 20px;
+  text-align: center;
+  background-color: var(--dark-grey);
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}

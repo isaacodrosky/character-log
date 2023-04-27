@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@400;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Character Log</title>
+  </head>
+  <body>
+    <div class="container">
+      <main>
+        <h1>Character Log</h1>
+        <form id="character-form">
+          <label for="character-name-input">Character name</label>
+          <input
+            type="text"
+            id="character-name-input"
+            name="character-name-input"
+            placeholder="Character name"
+            aria-label="character name"
+          />
+          <br />
+          <label for="book-name-input">Book series</label>
+          <input
+            type="text"
+            id="book-name-input"
+            name="book-name-input"
+            placeholder="Book name"
+            aria-label="book name"
+          />
+          <br />
+          <button type="submit" id="save-btn">Save</button>
+        </form>
+      </main>
+
+      <section class="grid-container" id="character-section">
+        <!-- RENDERED CHARACTER DIVS GO HERE -->
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
