@@ -19,7 +19,7 @@ body {
 }
 
 main {
-  max-width: 70%;
+  max-width: 80%;
   margin: 50px auto 20px auto;
   padding: 40px;
   text-align: center;
@@ -30,7 +30,7 @@ main {
 
 form {
   margin: 20px auto;
-  max-width: 80%;
+  max-width: 95%;
 }
 
 form label {
@@ -81,4 +81,15 @@ section div {
   background-color: var(--dark-grey);
   border-radius: 15px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* media queries */
+@media only screen and (max-width: 500px) {
+  main {
+    max-width: 90%;
+  }
+
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
 }
