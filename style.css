@@ -1,4 +1,4 @@
-
+/* global styles */
 :root {
   --sans-serif: 'Fira Sans', sans-serif;
   --orange: #ff8336;
@@ -28,6 +28,7 @@ main {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
+/* form styles */
 form {
   margin: 20px auto;
   max-width: 95%;
@@ -67,6 +68,7 @@ form button {
   border-radius: 50vh;
 }
 
+/* character card styles */
 section {
   max-width: 90%;
   margin: 0 auto 10px auto;
@@ -75,12 +77,24 @@ section {
   gap: 10px;
 }
 
-section div {
+.character-card {
   padding: 20px;
-  text-align: center;
   background-color: var(--dark-grey);
   border-radius: 15px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.character-card h3 {
+  color: var(--orange);
+}
+
+.character-card h2, .character-card h3 {
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.character-card p {
+  margin-bottom: 5px;
 }
 
 /* media queries */

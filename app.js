@@ -31,8 +31,8 @@ function addNewCharacter() {
     renderHtml += `
     <div class="character-card">
        <h2>${character.name}</h2>
-       <p>${character.book}</p>
-       <p>First mentioned: ${character.firstMention}</p>
+       <h3>${character.book}</h3>
+       <p>First mentioned (page): ${character.firstMention}</p>
        <p>Description: ${character.description}</p>
        <p>Location: ${character.location}</p>
        <p>Notes: ${character.notes}</p>
@@ -41,7 +41,6 @@ function addNewCharacter() {
   }
   return renderHtml;
 }
-
 
 // create new character object from user form input
 function retrieveInput() {
