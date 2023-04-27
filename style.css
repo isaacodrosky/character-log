@@ -1,4 +1,4 @@
-/* global styles */
+/* GLOBAL */
 :root {
   --sans-serif: 'Fira Sans', sans-serif;
   --orange: #ff8336;
@@ -28,7 +28,7 @@ main {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
-/* form styles */
+/* FORM */
 form {
   margin: 20px auto;
   max-width: 95%;
@@ -68,7 +68,7 @@ form button {
   border-radius: 50vh;
 }
 
-/* character card styles */
+/* CHARACTER CARDS */
 section {
   max-width: 90%;
   margin: 0 auto 10px auto;
@@ -84,10 +84,6 @@ section {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
-.character-card h3 {
-  color: var(--orange);
-}
-
 .character-card h2, .character-card h3 {
   text-align: center;
   margin-bottom: 5px;
@@ -97,8 +93,30 @@ section {
   margin-bottom: 5px;
 }
 
-/* media queries */
-@media only screen and (max-width: 500px) {
+.character-card span {
+  color: var(--orange);
+}
+
+.character-card .icons {
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  color: var(--orange);
+}
+
+.character-card .edit-btn {
+  margin-right: 15px;
+}
+
+.character-card .edit-btn:hover, 
+.character-card .delete-btn:hover {
+  color: #FFF;
+  cursor: pointer;
+}
+
+/* MEDIA QUERIES */
+/* tablet & mobile styles */
+@media only screen and (max-width: 780px) {
   main {
     max-width: 90%;
   }
