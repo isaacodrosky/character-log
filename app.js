@@ -16,7 +16,13 @@ const removeFirstBtn = document.getElementById('remove-first-btn');
 const removeLastBtn = document.getElementById('remove-last-btn');
 // array will hold all current character objects
 let charactersArr = [];
-
+// retrieve characters from local storage
+let charactersFromLocalStorage = JSON.parse(localStorage.getItem("myCharacters"));
+// if there are characters in local storage, add them to the character array and render them to the DOM
+if (charactersFromLocalStorage) {
+  charactersArr = charactersFromLocalStorage;
+  characterSection.innerHTML = updateRender();
+}
 
 saveBtn.addEventListener('click', renderCharacter);
 
@@ -81,6 +87,9 @@ function retrieveInput() {
   locationInput.value = "";
   notesInput.value = "";
   
+  // save array to local storage
+  localStorage.setItem("myCharacters", JSON.stringify(charactersArr));
+
   return charactersArr;
 }
 
@@ -88,18 +97,20 @@ function retrieveInput() {
 removeFirstBtn.addEventListener('click', removeFirst);
 
 function removeFirst(e) {
-  e.preventDefault();
-  charactersArr.shift();
-  characterSection.innerHTML = updateRender();
+  e.preventDefault(); // prevent page refresh
+  charactersArr.shift(); // remove first item
+  localStorage.setItem("myCharacters", JSON.stringify(charactersArr)); // update local storage
+  characterSection.innerHTML = updateRender(); // update html render
 }
 
 // remove last item from character array
 removeLastBtn.addEventListener('click', removeLast);
 
 function removeLast(e) {
-  e.preventDefault();
-  charactersArr.pop();
-  characterSection.innerHTML = updateRender();
+  e.preventDefault(); // prevent page refresh
+  charactersArr.pop(); // remove last item
+  localStorage.setItem("myCharacters", JSON.stringify(charactersArr)); // update local storage
+  characterSection.innerHTML = updateRender(); // update html render
 }
 
 // update html rendered when array is changed
