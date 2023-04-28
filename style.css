@@ -44,6 +44,7 @@ form input {
   background: none;
   border: none;
   border-bottom: 3px solid var(--orange);
+  border-radius: 0;
   padding: 10px 5px 0 5px;
   color: #FFF;
   font-family: var(--sans-serif);
