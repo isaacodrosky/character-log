@@ -1,9 +1,9 @@
 /* GLOBAL */
 :root {
   --sans-serif: 'Fira Sans', sans-serif;
-  --orange: #ff8336;
-  --med-grey: #323232;
-  --dark-grey: #292929;
+  --orange: #f36f1e;
+  --med-grey: #32333a;
+  --dark-grey: #26262c;
 }
 
 * {
@@ -26,6 +26,10 @@ main {
   background-color: var(--dark-grey);
   border-radius: 15px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+main h1 {
+  font-size: 1.9rem;
 }
 
 /* FORM */
