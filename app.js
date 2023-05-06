@@ -24,10 +24,12 @@ document.addEventListener('click', function(e){
 function handleDeleteClick(characterId) {
   charactersArr.forEach(function(character){ // iterate thru characters array
     if (character.uuid === characterId) { // find character object with same uuid as target
-      let targetCharacterObj = character; 
-      charactersArr.splice(charactersArr.indexOf(targetCharacterObj), 1); // remove targetCharacterObj from array
-      localStorage.setItem("myCharacters", JSON.stringify(charactersArr)); // update local storage
-      characterSection.innerHTML = updateRender(); // update rendered html
+      if (confirm(`Are you sure you want to delete ${character.name}?`)){ // alert for user to confirm they want to delete this character
+        let targetCharacterObj = character; 
+        charactersArr.splice(charactersArr.indexOf(targetCharacterObj), 1); // remove targetCharacterObj from array
+        localStorage.setItem("myCharacters", JSON.stringify(charactersArr)); // update local storage
+        characterSection.innerHTML = updateRender(); // update rendered html
+      }
     }
   })
 }
