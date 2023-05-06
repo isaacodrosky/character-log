@@ -20,16 +20,16 @@ body {
 
 main {
   max-width: 80%;
-  margin: 50px auto 20px auto;
-  padding: 40px;
+  margin: 30px auto 20px auto;
+  padding: 30px 25px;
   text-align: center;
   background-color: var(--dark-grey);
-  border-radius: 15px;
+  border-radius: 10px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
 main h1 {
-  font-size: 1.9rem;
+  font-size: 1.5rem;
 }
 
 /* FORM */
@@ -52,7 +52,7 @@ form input {
   padding: 10px 5px 0 5px;
   color: #FFF;
   font-family: var(--sans-serif);
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 form input:focus {
@@ -64,10 +64,10 @@ form button {
   background-color: var(--orange);
   color: var(--dark-grey);
   border: none;
-  margin-top: 20px;
+  margin-top: 20px; 
   padding: 10px 20px;
   width: 100%;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 800;
   text-transform: uppercase;
   border-radius: 50vh;

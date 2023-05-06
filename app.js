@@ -20,6 +20,7 @@ document.addEventListener('click', function(e){
   }
 })
 
+// delete character from array
 function handleDeleteClick(characterId) {
   charactersArr.forEach(function(character){ // iterate thru characters array
     if (character.uuid === characterId) { // find character object with same uuid as target
