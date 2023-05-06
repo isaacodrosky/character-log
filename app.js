@@ -12,27 +12,8 @@ const descriptionInput = document.getElementById('description-input');
 const locationInput = document.getElementById('location-input');
 const notesInput = document.getElementById('notes-input');
 
+let renderHtml;
 let charactersArr = [];
-
-document.addEventListener('click', function(e){
-  if (e.target.dataset.delete) { // if clicking on delete button
-    handleDeleteClick(e.target.dataset.delete) // handle delete click, pass argument of clicked item's uuid
-  }
-})
-
-// delete character from array
-function handleDeleteClick(characterId) {
-  charactersArr.forEach(function(character){ // iterate thru characters array
-    if (character.uuid === characterId) { // find character object with same uuid as target
-      if (confirm(`Are you sure you want to delete ${character.name}?`)){ // alert for user to confirm they want to delete this character
-        let targetCharacterObj = character; 
-        charactersArr.splice(charactersArr.indexOf(targetCharacterObj), 1); // remove targetCharacterObj from array
-        localStorage.setItem("myCharacters", JSON.stringify(charactersArr)); // update local storage
-        characterSection.innerHTML = updateRender(); // update rendered html
-      }
-    }
-  })
-}
 
 // retrieve characters from local storage
 let charactersFromLocalStorage = JSON.parse(localStorage.getItem("myCharacters"));
@@ -42,7 +23,27 @@ if (charactersFromLocalStorage) {
   characterSection.innerHTML = updateRender();
 }
 
-saveBtn.addEventListener('click', renderCharacter);
+document.addEventListener('click', function(e){
+  if (e.target.dataset.delete) { // if clicking on delete button
+    handleDeleteClick(e.target.dataset.delete) // handle delete click, pass argument of clicked item's uuid
+  } else if (e.target === saveBtn) {
+    renderCharacter(e);
+  }
+})
+
+// delete character from array
+function handleDeleteClick(characterId) {
+  charactersArr.forEach(function(character){ // iterate thru characters array
+    if (character.uuid === characterId) { // find character object with same uuid as target
+      if (confirm(`Are you sure you want to delete ${character.name}?`)){ // ask user to confirm they want to delete this character
+        let targetCharacterObj = character; 
+        charactersArr.splice(charactersArr.indexOf(targetCharacterObj), 1); // remove targetCharacterObj from array
+        localStorage.setItem("myCharacters", JSON.stringify(charactersArr)); // update local storage
+        characterSection.innerHTML = updateRender(); // update rendered html
+      }
+    }
+  })
+}
 
 // display character array in browser
 function renderCharacter(e) {
@@ -53,9 +54,9 @@ function renderCharacter(e) {
 
 // add newest character object to array, create html for each character in array
 function addNewCharacter() {
-  let charactersArr = retrieveInput();
+  charactersArr = retrieveInput();
   // create HTML for each character in charactersArr;
-  let renderHtml = "";
+  renderHtml = "";
   for (let character of charactersArr) {
     renderHtml += `
     <div class="character-card">
@@ -115,7 +116,7 @@ function retrieveInput() {
 
 // update html rendered when array is changed
 function updateRender() {
-  let renderHtml = "";
+  renderHtml = "";
   for (let character of charactersArr) {
     renderHtml += `
     <div class="character-card">
@@ -126,7 +127,7 @@ function updateRender() {
        <p><span>Location:</span> ${character.location}</p>
        <p><span>Notes:</span> ${character.notes}</p>
        <p class="icons">
-        <i class="fa fas fa-pencil edit-btn"></i>
+        <i class="fa fas fa-pencil edit-btn" data-edit="${character.uuid}"></i>
         <i class="fa fa-solid fa-trash delete-btn" data-delete="${character.uuid}"></i>
       </p> 
      </div>
