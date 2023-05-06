@@ -1,3 +1,6 @@
+// uuid generator
+import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
+
 // variables
 const saveBtn = document.getElementById('save-btn');
 const characterForm = document.getElementById('character-form');
@@ -8,14 +11,26 @@ const firstMentionInput = document.getElementById('first-mention-input');
 const descriptionInput = document.getElementById('description-input');
 const locationInput = document.getElementById('location-input');
 const notesInput = document.getElementById('notes-input');
-// delete and edit buttons, do not yet function
-const deleteBtn = document.getElementsByClassName('delete-btn');
-const editBtn = document.getElementsByClassName('edit-btn');
-// remove first/last buttons, temporary solution until delete function added
-const removeFirstBtn = document.getElementById('remove-first-btn');
-const removeLastBtn = document.getElementById('remove-last-btn');
-// array will hold all current character objects
+
 let charactersArr = [];
+
+document.addEventListener('click', function(e){
+  if (e.target.dataset.delete) { // if clicking on delete button
+    handleDeleteClick(e.target.dataset.delete) // handle delete click, pass argument of clicked item's uuid
+  }
+})
+
+function handleDeleteClick(characterId) {
+  charactersArr.forEach(function(character){ // iterate thru characters array
+    if (character.uuid === characterId) { // find character object with same uuid as target
+      let targetCharacterObj = character; 
+      charactersArr.splice(charactersArr.indexOf(targetCharacterObj), 1); // remove targetCharacterObj from array
+      localStorage.setItem("myCharacters", JSON.stringify(charactersArr)); // update local storage
+      characterSection.innerHTML = updateRender(); // update rendered html
+    }
+  })
+}
+
 // retrieve characters from local storage
 let charactersFromLocalStorage = JSON.parse(localStorage.getItem("myCharacters"));
 // if there are characters in local storage, add them to the character array and render them to the DOM
@@ -48,8 +63,8 @@ function addNewCharacter() {
        <p><span>Location:</span> ${character.location}</p>
        <p><span>Notes:</span> ${character.notes}</p>
        <p class="icons">
-        <i class="fa fas fa-pencil edit-btn"></i>
-        <i class="fa fa-solid fa-trash delete-btn"></i>
+        <i class="fa fas fa-pencil edit-btn" data-edit="${character.uuid}"></i>
+        <i class="fa fa-solid fa-trash delete-btn" data-delete="${character.uuid}"></i>
       </p> 
      </div>
     `;
@@ -57,7 +72,7 @@ function addNewCharacter() {
   return renderHtml;
 }
 
-// create new character object from user form input
+// build new character object from user form input
 function retrieveInput() {
   const characterFormData = new FormData(characterForm);
   const characterName = characterFormData.get('character-name-input');
@@ -66,7 +81,8 @@ function retrieveInput() {
   const description = characterFormData.get('description-input');
   const location = characterFormData.get('location-input');
   const notes = characterFormData.get('notes-input');
-  // create character object from user input
+  const uuid = uuidv4();
+  // build character object from user input
   const characterObj = {
     name: characterName,
     book: bookName,
@@ -74,6 +90,7 @@ function retrieveInput() {
     description: description,
     location: location,
     notes: notes,
+    uuid: uuid,
   };
 
   // add new character object to array
@@ -93,26 +110,6 @@ function retrieveInput() {
   return charactersArr;
 }
 
-// remove first item from character array
-removeFirstBtn.addEventListener('click', removeFirst);
-
-function removeFirst(e) {
-  e.preventDefault(); // prevent page refresh
-  charactersArr.shift(); // remove first item
-  localStorage.setItem("myCharacters", JSON.stringify(charactersArr)); // update local storage
-  characterSection.innerHTML = updateRender(); // update html render
-}
-
-// remove last item from character array
-removeLastBtn.addEventListener('click', removeLast);
-
-function removeLast(e) {
-  e.preventDefault(); // prevent page refresh
-  charactersArr.pop(); // remove last item
-  localStorage.setItem("myCharacters", JSON.stringify(charactersArr)); // update local storage
-  characterSection.innerHTML = updateRender(); // update html render
-}
-
 // update html rendered when array is changed
 function updateRender() {
   let renderHtml = "";
@@ -127,7 +124,7 @@ function updateRender() {
        <p><span>Notes:</span> ${character.notes}</p>
        <p class="icons">
         <i class="fa fas fa-pencil edit-btn"></i>
-        <i class="fa fa-solid fa-trash delete-btn"></i>
+        <i class="fa fa-solid fa-trash delete-btn" data-delete="${character.uuid}"></i>
       </p> 
      </div>
     `;
