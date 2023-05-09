@@ -70,7 +70,7 @@ form button {
   font-size: 1rem;
   font-weight: 800;
   text-transform: uppercase;
-  border-radius: 50vh;
+  border-radius: 8px;
 }
 
 /* CHARACTER CARDS */
