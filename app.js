@@ -27,7 +27,11 @@ document.addEventListener('click', function(e){
   if (e.target.dataset.delete) { // if clicking on delete button
     handleDeleteClick(e.target.dataset.delete) // handle delete click, pass argument of clicked item's uuid
   } else if (e.target === saveBtn) {
-    renderCharacter(e);
+    if (characterNameInput.value.length > 0) {
+      renderCharacter(e);
+    } else {
+      alert('Please enter a character name.');
+    }
   }
 })
 
@@ -78,24 +82,25 @@ function addNewCharacter() {
 
 // build new character object from user form input
 function retrieveInput() {
-  const characterFormData = new FormData(characterForm);
-  const characterName = characterFormData.get('character-name-input');
-  const bookName = characterFormData.get('book-name-input');
-  const firstMention = characterFormData.get('first-mention-input');
-  const description = characterFormData.get('description-input');
-  const location = characterFormData.get('location-input');
-  const notes = characterFormData.get('notes-input');
-  const uuid = uuidv4();
-  // build character object from user input
-  const characterObj = {
-    name: characterName,
-    book: bookName,
-    firstMention: firstMention,
-    description: description,
-    location: location,
-    notes: notes,
-    uuid: uuid,
-  };
+  
+    const characterFormData = new FormData(characterForm);
+    const characterName = characterFormData.get('character-name-input');
+    const bookName = characterFormData.get('book-name-input');
+    const firstMention = characterFormData.get('first-mention-input');
+    const description = characterFormData.get('description-input');
+    const location = characterFormData.get('location-input');
+    const notes = characterFormData.get('notes-input');
+    const uuid = uuidv4();
+    // build character object from user input
+    const characterObj = {
+      name: characterName,
+      book: bookName,
+      firstMention: firstMention,
+      description: description,
+      location: location,
+      notes: notes,
+      uuid: uuid,
+      };
 
   // add new character object to array
   charactersArr.push(characterObj);
