@@ -2,7 +2,7 @@
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
 // variables
-const saveBtn = document.getElementById('save-btn');
+const addBtn = document.getElementById('add-btn');
 const characterForm = document.getElementById('character-form');
 const characterSection = document.getElementById('character-section');
 const characterNameInput = document.getElementById('character-name-input');
@@ -20,18 +20,22 @@ let charactersFromLocalStorage = JSON.parse(localStorage.getItem("myCharacters")
 // if there are characters in local storage, add them to the character array and render them to the DOM
 if (charactersFromLocalStorage) {
   charactersArr = charactersFromLocalStorage;
-  characterSection.innerHTML = updateRender();
+  characterSection.innerHTML = getRenderHtml();
 }
 
 document.addEventListener('click', function(e){
-  if (e.target.dataset.delete) { // if clicking on delete button
-    handleDeleteClick(e.target.dataset.delete) // handle delete click, pass argument of clicked item's uuid
-  } else if (e.target === saveBtn) {
+  if (e.target.dataset.delete) { 
+    handleDeleteClick(e.target.dataset.delete) 
+  } else if (e.target === addBtn) {
     if (characterNameInput.value.length > 0) {
       renderCharacter(e);
     } else {
       alert('Please enter a character name.');
     }
+  } else if (e.target.dataset.edit) {
+    handleEditClick(e.target.dataset.edit)
+  } else if (e.target.dataset.save) {
+    handleSaveClick(e.target.dataset.save)
   }
 })
 
@@ -43,8 +47,49 @@ function handleDeleteClick(characterId) {
         let targetCharacterObj = character; 
         charactersArr.splice(charactersArr.indexOf(targetCharacterObj), 1); // remove targetCharacterObj from array
         localStorage.setItem("myCharacters", JSON.stringify(charactersArr)); // update local storage
-        characterSection.innerHTML = updateRender(); // update rendered html
+        characterSection.innerHTML = getRenderHtml(); // update rendered html
       }
+    }
+  })
+}
+
+function handleEditClick(characterId) {
+  charactersArr.forEach(function(character){
+    if (character.uuid === characterId) { 
+      const parent = document.getElementById(`${character.uuid}`); // find character card that was clicked
+      const editFields =  Array.from(parent.getElementsByClassName('character-detail')); // create array from 'character-detail' elements so you can iterate below
+      editFields.forEach(function(field) { 
+        field.setAttribute('contenteditable', '')
+      })
+
+      // add check mark button 
+      parent.querySelector('.icons').insertAdjacentHTML('afterbegin', `
+        <i class="fa-solid fas fa-check save-btn" data-save="${character.uuid}"></i>
+      `)
+    }
+  })
+}
+
+function handleSaveClick(characterId) {
+  charactersArr.forEach(function(character){
+    if (character.uuid === characterId) {
+
+      // update character obj with textcontent of each editfield
+      const parent = document.getElementById(`${characterId}`);
+      character.name = parent.querySelector(`[data-name="${characterId}"]`).textContent
+      character.book = parent.querySelector(`[data-book="${characterId}"]`).textContent
+      character.firstMention = parent.querySelector(`[data-first-mention="${characterId}"]`).textContent
+      character.description = parent.querySelector(`[data-description="${characterId}"]`).textContent
+      character.notes = parent.querySelector(`[data-notes="${characterId}"]`).textContent
+
+      // BUG: need to allow empty book name to be edited (not displaying if empty)
+
+      localStorage.setItem("myCharacters", JSON.stringify(charactersArr));
+
+      const editFields =  Array.from(parent.getElementsByClassName('character-detail')); 
+      editFields.forEach(function(field) { 
+        field.removeAttribute('contenteditable', '');
+      })
     }
   })
 }
@@ -52,24 +97,21 @@ function handleDeleteClick(characterId) {
 // display character array in browser
 function renderCharacter(e) {
   e.preventDefault(); // prevent refresh on submit
-  const characterCard = addNewCharacter();
-  characterSection.innerHTML = characterCard;
+  charactersArr = retrieveInput()
+  characterSection.innerHTML = getRenderHtml();
 }
 
-// add newest character object to array, create html for each character in array
-function addNewCharacter() {
-  charactersArr = retrieveInput();
-  // create HTML for each character in charactersArr;
+function getRenderHtml() {
   renderHtml = "";
   for (let character of charactersArr) {
     renderHtml += `
-    <div class="character-card">
-       <h2>${character.name}</h2>
-       <h3>${character.book}</h3>
-       <p><span>First mentioned (page):</span> ${character.firstMention}</p>
-       <p><span>Description:</span> ${character.description}</p>
-       <p><span>Location:</span> ${character.location}</p>
-       <p><span>Notes:</span> ${character.notes}</p>
+    <div class="character-card" id="${character.uuid}">
+       <h2><span class="character-detail" data-name="${character.uuid}">${character.name}</span></h2>
+       <h3><span class="character-detail" data-book="${character.uuid}">${character.book}</span></h3>
+       <p>First mentioned (page): <span class="character-detail" data-first-mention="${character.uuid}">${character.firstMention}</span></p>
+       <p>Description: <span class="character-detail" data-description="${character.uuid}">${character.description}</span></p>
+       <p>Location: <span class="character-detail" data-location="${character.uuid}">${character.location}</span></p>
+       <p>Notes: <span class="character-detail" data-notes="${character.uuid}">${character.notes}</span></p>
        <p class="icons">
         <i class="fa fas fa-pencil edit-btn" data-edit="${character.uuid}"></i>
         <i class="fa fa-solid fa-trash delete-btn" data-delete="${character.uuid}"></i>
@@ -84,22 +126,15 @@ function addNewCharacter() {
 function retrieveInput() {
   
     const characterFormData = new FormData(characterForm);
-    const characterName = characterFormData.get('character-name-input');
-    const bookName = characterFormData.get('book-name-input');
-    const firstMention = characterFormData.get('first-mention-input');
-    const description = characterFormData.get('description-input');
-    const location = characterFormData.get('location-input');
-    const notes = characterFormData.get('notes-input');
-    const uuid = uuidv4();
     // build character object from user input
     const characterObj = {
-      name: characterName,
-      book: bookName,
-      firstMention: firstMention,
-      description: description,
-      location: location,
-      notes: notes,
-      uuid: uuid,
+      name: characterFormData.get('character-name-input'),
+      book: characterFormData.get('book-name-input'),
+      firstMention: characterFormData.get('first-mention-input'),
+      description: characterFormData.get('description-input'),
+      location: characterFormData.get('location-input'),
+      notes: characterFormData.get('notes-input'),
+      uuid: uuidv4(),
       };
 
   // add new character object to array
@@ -117,26 +152,4 @@ function retrieveInput() {
   localStorage.setItem("myCharacters", JSON.stringify(charactersArr));
 
   return charactersArr;
-}
-
-// update html rendered when array is changed
-function updateRender() {
-  renderHtml = "";
-  for (let character of charactersArr) {
-    renderHtml += `
-    <div class="character-card">
-       <h2>${character.name}</h2>
-       <h3>${character.book}</h3>
-       <p><span>First mentioned (page):</span> ${character.firstMention}</p>
-       <p><span>Description:</span> ${character.description}</p>
-       <p><span>Location:</span> ${character.location}</p>
-       <p><span>Notes:</span> ${character.notes}</p>
-       <p class="icons">
-        <i class="fa fas fa-pencil edit-btn" data-edit="${character.uuid}"></i>
-        <i class="fa fa-solid fa-trash delete-btn" data-delete="${character.uuid}"></i>
-      </p> 
-     </div>
-    `;
-  }
-  return renderHtml;
 }

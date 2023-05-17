@@ -91,15 +91,18 @@ section {
 
 .character-card h2, .character-card h3 {
   text-align: center;
-  margin-bottom: 5px;
+  margin-bottom: 15px;
 }
 
 .character-card p {
-  margin-bottom: 5px;
+  color: var(--orange);
+  margin-bottom: 15px;
+  font-weight: 700;
 }
 
-.character-card span {
-  color: var(--orange);
+.character-card p span {
+  color: #fff;
+  font-weight: 400;
 }
 
 .character-card .icons {
@@ -110,14 +113,24 @@ section {
 }
 
 .character-card .edit-btn {
-  margin-right: 15px;
+  margin: 0 15px 0 15px;
 }
 
-.character-card .edit-btn:hover, 
-.character-card .delete-btn:hover {
+.character-card i:hover,
+.character-card i:active {
   color: #FFF;
   cursor: pointer;
 }
+
+/* edit states */
+span[contenteditable] {
+  background-color: var(--med-grey);
+  border: 2px solid var(--orange);
+  padding: 2px 4px;
+  border-radius: 5px;
+  margin-left: 3px;
+}
+
 
 /* MEDIA QUERIES */
 /* tablet & mobile styles */
