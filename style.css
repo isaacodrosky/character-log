@@ -131,6 +131,11 @@ span[contenteditable] {
   margin-left: 3px;
 }
 
+[contenteditable]:empty {
+  display: block;
+  height: 2em;
+}
+
 
 /* MEDIA QUERIES */
 /* tablet & mobile styles */

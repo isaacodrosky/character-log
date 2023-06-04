@@ -71,15 +71,16 @@ function handleSaveClick(characterId) {
       character.description = parent.querySelector(`[data-description="${characterId}"]`).textContent
       character.notes = parent.querySelector(`[data-notes="${characterId}"]`).textContent
 
-      // BUG: need to allow empty book name to be edited (not displaying if empty)
-
       localStorage.setItem("myCharacters", JSON.stringify(charactersArr));
 
       const editFields =  Array.from(parent.getElementsByClassName('character-detail')); 
       editFields.forEach(function(field) { 
         field.removeAttribute('contenteditable', '');
       })
+
+      document.querySelector('.save-btn').style.display = 'none'
     }
+    
   })
 }
 
@@ -101,7 +102,7 @@ function getRenderHtml() {
       <h3>
         <span class="character-detail" data-book="${character.uuid}">${character.book}</span>
       </h3>
-      <p>First mentioned (page): 
+      <p>First mentioned: 
         <span class="character-detail" data-first-mention="${character.uuid}">${character.firstMention}</span>
       </p>
       <p>Description: 
@@ -126,6 +127,9 @@ function getRenderHtml() {
 // build new character object from user form input & save to local storage
 function retrieveInput() {
 
+  // refactor to construct object in a better way: 
+  // https://stackoverflow.com/a/48996513/17185082
+  
     const characterFormData = new FormData(document.getElementById('character-form'));
     const characterObj = {
       name: characterFormData.get('character-name-input'),
