@@ -1,24 +1,23 @@
 // uuid generator
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
+const characterForm = document.getElementById('character-form');
 const characterNameInput = document.getElementById('character-name-input');
 const characterSection = document.getElementById('character-section');
 let renderHtml;
 let charactersArr = [];
 let charactersFromLocalStorage = JSON.parse(localStorage.getItem("myCharacters"));
 
-// if there are characters in local storage, add them to the character array and render to the DOM
-if (charactersFromLocalStorage) {
-  charactersArr = charactersFromLocalStorage;
-  characterSection.innerHTML = getRenderHtml();
-}
+checkCharacters();
 
 document.addEventListener('click', function(e){
   if (e.target.dataset.delete) { 
     handleDeleteClick(e.target.dataset.delete) 
+    checkCharacters();
   } else if (e.target === document.getElementById('add-btn')) {
     if (characterNameInput.value.length > 0) {
       renderNewCharacter(e);
+      checkCharacters();
     } else {
       alert('Please enter a character name.');
     }
@@ -26,6 +25,10 @@ document.addEventListener('click', function(e){
     handleEditClick(e.target.dataset.edit)
   } else if (e.target.dataset.save) {
     handleSaveClick(e.target.dataset.save)
+  } else if (e.target.dataset.new) {
+    characterForm.classList.toggle('open');
+    document.getElementById('new-icon').classList.toggle('rotate');
+    document.getElementById('new-icon').style.transition = 'transform 200ms'
   }
 })
 
@@ -47,8 +50,9 @@ function handleEditClick(characterId) {
     if (character.uuid === characterId) { 
       const parent = document.getElementById(`${character.uuid}`); // find character card that was clicked
       const editFields =  Array.from(parent.getElementsByClassName('character-detail')); // create array from 'character-detail' elements so you can iterate below
+      
       editFields.forEach(function(field) { 
-        field.setAttribute('contenteditable', '')
+          field.setAttribute('contenteditable', '')
       })
 
       // add check mark button 
@@ -130,7 +134,7 @@ function retrieveInput() {
   // refactor to construct object in a better way: 
   // https://stackoverflow.com/a/48996513/17185082
   
-    const characterFormData = new FormData(document.getElementById('character-form'));
+    const characterFormData = new FormData(characterForm);
     const characterObj = {
       name: characterFormData.get('character-name-input'),
       book: characterFormData.get('book-name-input'),
@@ -153,4 +157,17 @@ function retrieveInput() {
   localStorage.setItem("myCharacters", JSON.stringify(charactersArr));
 
   return charactersArr;
+}
+
+function checkCharacters() {
+  // if there are characters in local storage, add them to the character array and render to the DOM
+  if (charactersFromLocalStorage) {
+    charactersArr = charactersFromLocalStorage;
+    characterSection.innerHTML = getRenderHtml();
+    characterForm.classList.remove('open');
+  }
+
+  if (!charactersFromLocalStorage.length) {
+    characterForm.classList.toggle('open');
+  }
 }

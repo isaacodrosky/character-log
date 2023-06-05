@@ -32,10 +32,47 @@ main h1 {
   font-size: 1.5rem;
 }
 
+.new-btn {
+  color: var(--orange);
+  font-size: 1.2rem;
+  background: none;
+  border: none;
+  position: relative;
+  left: 45%;
+  top: -25px;
+  transition: all 500ms;
+  /* display: none; */
+}
+
+.new-btn:hover,
+.new-btn:active {
+  color: #fff;
+  transform: scale(1.2);
+  transition: all 500ms;
+  cursor: pointer;
+}
+
+.hide {
+  display: none;
+}
+
+.rotate {
+  transform: rotate(45deg);
+}
+
 /* FORM */
-form {
+.open {
   margin: 20px auto;
+  max-height: 800px;
+  transition: all 600ms ease;
+}
+
+form {
+  margin: 0 auto;
   max-width: 95%;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 600ms ease;
 }
 
 form label {
@@ -71,6 +108,14 @@ form button {
   font-weight: 800;
   text-transform: uppercase;
   border-radius: 8px;
+  transition: all 500ms;
+}
+
+form button:hover,
+form button:active {
+  background-color: #fff;
+  transform: scale(1.02);
+  transition: all 500ms;
 }
 
 /* CHARACTER CARDS */
