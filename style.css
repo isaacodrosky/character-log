@@ -19,7 +19,8 @@ body {
 }
 
 main {
-  max-width: 80%;
+  width: 90%;
+  max-width: 400px;
   margin: 30px auto 20px auto;
   padding: 30px 25px;
   text-align: center;
@@ -185,10 +186,6 @@ span[contenteditable] {
 /* MEDIA QUERIES */
 /* tablet & mobile styles */
 @media only screen and (max-width: 780px) {
-  main {
-    max-width: 90%;
-  }
-
   .grid-container {
     grid-template-columns: 1fr;
   }
