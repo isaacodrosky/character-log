@@ -10,6 +10,18 @@ let charactersFromLocalStorage = JSON.parse(localStorage.getItem("myCharacters")
 
 checkCharacters();
 
+document.addEventListener('keypress', (e) => {
+  if (e.keypress === 'Enter') {
+    if (characterNameInput.value.length > 0) {
+      renderNewCharacter(e);
+      checkCharacters();
+    } else {
+      alert('Please enter a character name.');
+    }
+  }
+})
+
+
 document.addEventListener('click', function(e){
   if (e.target.dataset.delete) { 
     handleDeleteClick(e.target.dataset.delete) 
