@@ -159,12 +159,7 @@ function retrieveInput() {
 
   charactersArr.push(characterObj);
 
-  characterNameInput.value = "";
-  document.getElementById('book-name-input').value = "";
-  document.getElementById('first-mention-input').value = "";
-  document.getElementById('description-input').value = "";
-  document.getElementById('location-input').value = "";
-  document.getElementById('notes-input').value = "";
+  characterForm.reset();
   
   localStorage.setItem("myCharacters", JSON.stringify(charactersArr));
 
