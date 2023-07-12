@@ -10,7 +10,7 @@ let charactersFromLocalStorage = JSON.parse(localStorage.getItem("myCharacters")
 
 checkCharacters();
 
-document.addEventListener('keypress', (e) => {
+characterForm.addEventListener('keypress', (e) => {
   if (e.keypress === 'Enter') {
     if (characterNameInput.value.length > 0) {
       renderNewCharacter(e);
@@ -20,7 +20,6 @@ document.addEventListener('keypress', (e) => {
     }
   }
 })
-
 
 document.addEventListener('click', function(e){
   if (e.target.dataset.delete) { 
@@ -167,7 +166,6 @@ function retrieveInput() {
 }
 
 function checkCharacters() {
-  // if there are characters in local storage, add them to the character array and render to the DOM
   if (charactersFromLocalStorage) {
     charactersArr = charactersFromLocalStorage;
     characterSection.innerHTML = getRenderHtml();
