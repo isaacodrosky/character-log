@@ -172,7 +172,7 @@ function checkCharacters() {
     characterForm.classList.remove('open');
   }
 
-  if (!charactersFromLocalStorage.length) {
+  if (!charactersFromLocalStorage) {
     characterForm.classList.toggle('open');
   }
 }
